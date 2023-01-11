@@ -1,0 +1,21 @@
+%{
+#include <stdio.h>
+%}
+
+%x ARTICLES
+%x VERBS
+
+%%
+"the"|"a"|"an" { printf("Article: %s\n", yytext); BEGIN(ARTICLES); }
+"is"|"am"|"are"|"was"|"were"|"be"|"being"|"been"|"do"|"does"|"did"|"has"|"have"|"had" { printf("Verb: %s\n", yytext); BEGIN(VERBS); }
+<ARTICLES>"the"|"a"|"an" { printf("Article: %s\n", yytext); }
+<VERBS>"is"|"am"|"are"|"was"|"were"|"be"|"being"|"been"|"do"|"does"|"did"|"has"|"have"|"had" { printf("Verb: %s\n", yytext); }
+[a-zA-Z]+ { /* ignore other words */ }
+\n { return 0; }
+. { /* ignore other characters */ }
+%%
+
+int main() {
+    yylex();
+    return 0;
+}
