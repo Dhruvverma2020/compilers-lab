@@ -1,0 +1,14 @@
+%{
+#include <stdio.h>
+%}
+
+%%
+[a-z] { printf("%c",yytext[0]); }
+[A-Z]+ { /* ignore uppercase letters */ }
+[^A-Za-z] { /* ignore other characters */ }
+%%
+
+int main() {
+    yylex();
+    return 0;
+}
